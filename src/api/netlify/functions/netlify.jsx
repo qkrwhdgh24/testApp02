@@ -1,33 +1,72 @@
-const express = require('express');
-const axios = require('axios');
+import React, { useState } from 'react';
+import axios from 'axios';
+import SearchBookResult from './SearchBookResult';
 
-const app = express();
+const SearchBook = ({ setBookImageUrl, setModalState }) => {
+  const [bookSearchKeyword, setBookSearchKeyword] = useState("");
+  const [bookSearchResult, setBookSearchResult] = useState([]);
+  const [postResponse, setPostResponse] = useState(null);
 
-const client_id = 'HjTqhvvcGj1bjRCEuTNG';
-const client_secret = 'bIXKGW9Pgb';
+  const handleImageSearchInputChange = (e) => {
+    setBookSearchKeyword(e.target.value);
+  };
 
-app.get('/search/book', async (req, res) => {
-  try {
-    const query = req.query.query;
-    const apiUrl = `https://openapi.naver.com/v1/search/book?query=${encodeURI(query)}`;
-    console.log(apiUrl);
+  const handleImageSearchClick = async () => {
+    if (!bookSearchKeyword.trim()) {
+      console.log("검색어 없음");
+      return;
+    }
+    try {
+      // Define the API URL for Naver's search book API
+      const apiUrl = 'https://openapi.naver.com/v1/search/book.json'; // Update with the correct Naver API endpoint
 
-    const headers = {
-      'X-Naver-Client-Id': client_id,
-      'X-Naver-Client-Secret': client_secret,
-    };
+      // Define headers with your Naver API credentials
+      const headers = {
+        'X-Naver-Client-Id': 'YOUR_CLIENT_ID',
+        'X-Naver-Client-Secret': 'YOUR_CLIENT_SECRET',
+      };
 
-    const response = await axios.get(apiUrl, { headers });
+      // Make the POST request to the Naver API
+      const response = await axios.get(apiUrl, {
+        params: { query: bookSearchKeyword },
+        headers: headers,
+      });
 
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+      // Update the state with search results and POST response
+      setBookSearchResult(response.data.items);
+      setPostResponse(response.data); // Set the POST response in state
+    } catch (err) {
+      console.error(err); // Log the error for debugging
+    }
+  };
 
-const port = process.env.PORT || 3000; // Use the environment variable PORT if available, or default to 3000
+  return (
+    <div title="이미지 검색하기" setModalState={setModalState}>
+      {/* ... Your modal content ... */}
+      <input
+        placeholder="책 제목, 지은이, 키워드로 검색할 수 있습니다."
+        value={bookSearchKeyword}
+        onChange={handleImageSearchInputChange}
+      />
+      <button onClick={handleImageSearchClick}>검색</button>
+      {bookSearchResult.map((item, index) => (
+        <SearchBookResult
+          key={index}
+          item={item}
+          setBookImageUrl={setBookImageUrl}
+          setModalState={setModalState}
+        />
+      ))}
+      
+      {/* Display the POST response, if any */}
+      {postResponse && (
+        <div>
+          <h3>POST Response</h3>
+          <pre>{JSON.stringify(postResponse, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+};
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+export default SearchBook;
