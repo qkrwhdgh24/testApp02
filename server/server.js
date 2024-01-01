@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
-var client_id = 'YOUR_CLIENT_ID'; // 책 검색 API의 클라이언트 ID
-var client_secret = 'YOUR_CLIENT_SECRET'; // 책 검색 API의 클라이언트 시크릿
+var client_id = process.env.REACT_APP_NAVER_ID; // 책 검색 API의 클라이언트 ID
+var client_secret = process.env.REACT_APP_NAVER_SECRET; // 책 검색 API의 클라이언트 시크릿
 app.get('/search/books', function (req, res) {
-   var api_url = '책 검색 API URL'; // 책 검색 API URL
+   var api_url = 'https://openapi.naver.com/v1/search/blog?query=' + text; 
    var request = require('request');
    var options = {
        url: api_url,
