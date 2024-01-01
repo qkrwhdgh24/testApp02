@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import SearchBookResult from './SeachBookResult';
+import SearchBookResult from './SearchBookResult'; // Import your search result component
 
-const SeachBook = ({ setBookImageUrl, setModalState }) => {
+const SearchBook = ({ setBookImageUrl, setModalState }) => {
   const [bookSearchKeyword, setBookSearchKeyword] = useState("");
   const [bookSearchResult, setBookSearchResult] = useState([]);
 
@@ -16,7 +16,13 @@ const SeachBook = ({ setBookImageUrl, setModalState }) => {
       return;
     }
     try {
-        const { data } = await axios.get(`https://openapi.naver.com/v1/search/book?query=${encodeURIComponent(bookSearchKeyword)}`);
+      // Define the apiUrl for your serverless function
+      const apiUrl = '/src/api/netlify.jsx'; // Update with your serverless function URL
+
+      // Make the API request to your serverless function
+      const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
+
+      // Update the state with search results
       setBookSearchResult(data);
     } catch (err) {
       console.log(err);
@@ -44,4 +50,4 @@ const SeachBook = ({ setBookImageUrl, setModalState }) => {
   );
 };
 
-export default SeachBook
+export default SearchBook;
