@@ -19,12 +19,12 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     }
     try {
       // Define the API URL for Naver's search book API
-      const apiUrl = '/v1/search/book.json'; // Update with the correct Naver API endpoint
+      const apiUrl = `https://openapi.naver.com/v1/search/book.json?query=${encodeURIComponent(query)}`; // Update with the correct Naver API endpoint
 
       // Define headers with your Naver API credentials
       const headers = {
-        'X-Naver-Client-Id': 'YOUR_CLIENT_ID',
-        'X-Naver-Client-Secret': 'YOUR_CLIENT_SECRET',
+        'X-Naver-Client-Id': 'HjTqhvvcGj1bjRCEuTNG',
+        'X-Naver-Client-Secret': 'bIXKGW9Pgb'
       };
 
       // Make the POST request to the Naver API
