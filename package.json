@@ -22,7 +22,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://cho-bookproject.netlify.app",
+  "homepage": "https://test-appsite.netlify.app",
   "eslintConfig": {
     "extends": [
       "react-app",
