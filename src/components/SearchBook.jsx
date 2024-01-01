@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import SearchBookResult from './SearchBookResult';
+import SearchBookResult from './SeachBookResult';
+
 
 const SearchBook = ({ setBookImageUrl, setModalState }) => {
   const [bookSearchKeyword, setBookSearchKeyword] = useState("");
