@@ -17,7 +17,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     }
     try {
       // Define the apiUrl for your serverless function
-      const apiUrl = '/src/api/netlify.jsx'; // Update with your serverless function URL
+      const apiUrl = '/.netlify/functions/netlify'; // Update with your serverless function endpoint
 
       // Make the API request to your serverless function
       const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
