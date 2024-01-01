@@ -24,7 +24,7 @@ function SearchBook() {
         setError(null);
         try {
             // Update the API URL to match the server endpoint
-            const apiUrl = `/search/books?query=${encodeURIComponent(keywords)}`;
+            const apiUrl = `/search/book?query=${encodeURIComponent(keywords)}`;
             const res = await axios.get(apiUrl);
     
             if (res.headers['content-type']?.includes('application/json')) {
