@@ -22,8 +22,14 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
       // Make the API request to your serverless function
       const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
 
-      // Update the state with search results
-      setBookSearchResult(data);
+      // Handle data format
+      if (Array.isArray(data)) {
+        setBookSearchResult(data);
+      } else if (data.items && Array.isArray(data.items)) {
+        setBookSearchResult(data.items);
+      } else {
+        console.error("Invalid data format received from the server.");
+      }
     } catch (err) {
       console.error(err); // Log the error for debugging
     }
@@ -58,14 +64,18 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
         onChange={handleImageSearchInputChange}
       />
       <button onClick={handleImageSearchClick}>검색</button>
-      {bookSearchResult.map((item, index) => (
-        <SearchBookResult
-          key={index}
-          item={item}
-          setBookImageUrl={setBookImageUrl}
-          setModalState={setModalState}
-        />
-      ))}
+      {Array.isArray(bookSearchResult) && bookSearchResult.length > 0 ? (
+        bookSearchResult.map((item, index) => (
+          <SearchBookResult
+            key={index}
+            item={item}
+            setBookImageUrl={setBookImageUrl}
+            setModalState={setModalState}
+          />
+        ))
+      ) : (
+        <p>No search results found.</p>
+      )}
       
       {/* Include a button to trigger your sample POST request */}
       <button onClick={sendSamplePostRequest}>Send Sample POST Request</button>
