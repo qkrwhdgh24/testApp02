@@ -21,7 +21,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
 
       // Make the API request to your serverless function
       const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
-
+      console.log(data);
       // Handle data format
       if (Array.isArray(data)) {
         setBookSearchResult(data);
