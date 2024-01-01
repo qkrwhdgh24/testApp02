@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import SearchBookResult from './SeachBookResult';
-
+import SearchBookResult from './SearchBookResult';
 
 const SearchBook = ({ setBookImageUrl, setModalState }) => {
   const [bookSearchKeyword, setBookSearchKeyword] = useState("");
@@ -18,15 +17,23 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
       return;
     }
     try {
-      // Define the API URL for your serverless function
-      const apiUrl = 'https://test-appsite.netlify.app/'; // Update with your serverless function endpoint
+      // Define the API URL for Naver's search book API
+      const apiUrl = 'https://openapi.naver.com/v1/search/book.json'; // Update with the correct Naver API endpoint
 
-      // Make the POST request to the specified URL
-      const response = await axios.post(apiUrl, { query: bookSearchKeyword });
-      console.log(response)
+      // Define headers with your Naver API credentials
+      const headers = {
+        'X-Naver-Client-Id': 'YOUR_CLIENT_ID',
+        'X-Naver-Client-Secret': 'YOUR_CLIENT_SECRET',
+      };
+
+      // Make the POST request to the Naver API
+      const response = await axios.get(apiUrl, {
+        params: { query: bookSearchKeyword },
+        headers: headers,
+      });
 
       // Update the state with search results and POST response
-      setBookSearchResult(response.data);
+      setBookSearchResult(response.data.items);
       setPostResponse(response.data); // Set the POST response in state
     } catch (err) {
       console.error(err); // Log the error for debugging
