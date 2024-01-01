@@ -19,7 +19,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     }
     try {
       // Define the API URL for Naver's search book API
-      const apiUrl = 'https://openapi.naver.com/v1/search/book.json'; // Update with the correct Naver API endpoint
+      const apiUrl = '/v1/search/book.json'; // Update with the correct Naver API endpoint
 
       // Define headers with your Naver API credentials
       const headers = {
