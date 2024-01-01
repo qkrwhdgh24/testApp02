@@ -23,6 +23,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
 
       // Make the POST request to the specified URL
       const response = await axios.post(apiUrl, { query: bookSearchKeyword });
+      console.log(response)
 
       // Update the state with search results and POST response
       setBookSearchResult(response.data);

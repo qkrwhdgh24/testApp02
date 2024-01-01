@@ -11,6 +11,7 @@ app.get('/search/book', async (req, res) => {
   try {
     const query = req.query.query;
     const apiUrl = `https://openapi.naver.com/v1/search/book?query=${encodeURI(query)}`;
+    console.log(apiUrl)
 
     const headers = {
       'X-Naver-Client-Id': client_id,
