@@ -6,8 +6,8 @@ exports.handler = async function(event, context) {
 
     // Set up the headers with your Naver API credentials
     const headers = {
-        'X-Naver-Client-Id': process.env.NAVER_CLIENT_ID,
-        'X-Naver-Client-Secret': process.env.NAVER_CLIENT_SECRET,
+        'X-Naver-Client-Id': process.env.REACT_APP_NAVER_ID,
+        'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_SECRET,
     };
 
     try {
