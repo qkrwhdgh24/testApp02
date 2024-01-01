@@ -11,7 +11,7 @@ app.get('/search/blog', function (req, res) {
        return res.status(400).send('Query parameter is required');
    }
 
-   var api_url = 'https://openapi.naver.com/v1/search/blog?query=' + encodeURI(req.query.query);
+   var api_url = 'https://openapi.naver.com/v1/search/book?query=' + encodeURI(req.query.query);
    var options = {
        url: api_url,
        headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
