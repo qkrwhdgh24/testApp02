@@ -10,24 +10,24 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     setBookSearchKeyword(e.target.value);
   };
 
-  const handleImageSearchClick = async () => {
-    if (!bookSearchKeyword.trim()) {
-      console.log("검색어 없음");
-      return;
-    }
-    try {
-      // Define the apiUrl for your serverless function
-      const apiUrl = '/.netlify/functions/netlify'; // Update with your serverless function endpoint
+//   const handleImageSearchClick = async () => {
+//     if (!bookSearchKeyword.trim()) {
+//       console.log("검색어 없음");
+//       return;
+//     }
+//     try {
+//       // Define the apiUrl for your serverless function
+//       const apiUrl = '/.netlify/functions/netlify'; // Update with your serverless function endpoint
 
-      // Make the API request to your serverless function
-      const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
+//       // Make the API request to your serverless function
+//       const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
 
-      // Update the state with search results
-      setBookSearchResult(data);
-    } catch (err) {
-      console.error(err); // Log the error for debugging
-    }
-  };
+//       // Update the state with search results
+//       setBookSearchResult(data);
+//     } catch (err) {
+//       console.error(err); // Log the error for debugging
+//     }
+//   };
 
   // Include your sample Axios POST request code here
   const sendSamplePostRequest = async () => {
