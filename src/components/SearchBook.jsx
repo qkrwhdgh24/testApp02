@@ -24,7 +24,7 @@ const SeachBook = ({ setBookImageUrl, setModalState }) => {
   };
 
   return (
-    <Modal title="이미지 검색하기" setModalState={setModalState}>
+    <div title="이미지 검색하기" setModalState={setModalState}>
       {/* ... Your modal content ... */}
       <input
         placeholder="책 제목, 지은이, 키워드로 검색할 수 있습니다."
@@ -40,7 +40,7 @@ const SeachBook = ({ setBookImageUrl, setModalState }) => {
           setModalState={setModalState}
         />
       ))}
-    </Modal>
+    </div>
   );
 };
 
