@@ -16,7 +16,7 @@ const SeachBook = ({ setBookImageUrl, setModalState }) => {
       return;
     }
     try {
-      const { data } = await axios.get(`/api/image?query=${encodeURIComponent(bookSearchKeyword)}`);
+        const { data } = await axios.get(`https://openapi.naver.com/v1/search/book?query=${encodeURIComponent(bookSearchKeyword)}`);
       setBookSearchResult(data);
     } catch (err) {
       console.log(err);
