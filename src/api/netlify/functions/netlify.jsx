@@ -1,16 +1,19 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
-const client_id = 'HjTqhvvcGj1bjRCEuTNG';
-const client_secret = 'bIXKGW9Pgb';
+app.use(cors());
+
+const client_id = 'YOUR_CLIENT_ID';
+const client_secret = 'YOUR_CLIENT_SECRET';
 
 app.get('/search/book', async (req, res) => {
   try {
     const query = req.query.query;
-    const apiUrl = `https://openapi.naver.com/v1/search/book?query=${encodeURI(query)}`;
-    console.log(apiUrl);
+    const apiUrl = `https://openapi.naver.com/v1/search/book.json?query=${encodeURIComponent(query)}`;
 
     const headers = {
       'X-Naver-Client-Id': client_id,
@@ -26,8 +29,6 @@ app.get('/search/book', async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 3000; // Use the environment variable PORT if available, or default to 3000
-
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
