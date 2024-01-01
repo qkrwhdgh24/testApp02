@@ -23,12 +23,14 @@ function SearchBook() {
         setIsLoading(true);
         setError(null);
         try {
-            const apiUrl = `/src/SeachBook?query=${encodeURIComponent(keywords)}`;
-            // const apiUrl = `/?query=${encodeURIComponent(keywords)}`;
+            // Update the API URL to match the server endpoint
+            const apiUrl = `/search/books?query=${encodeURIComponent(keywords)}`;
             const res = await axios.get(apiUrl);
+    
             if (res.headers['content-type']?.includes('application/json')) {
                 const { data } = res;
-                setBookResults(data);
+                // Update this line based on the response structure from your server
+                setBookResults(data.books); 
             } else {
                 console.error(res);    
                 setError('no data');
@@ -41,6 +43,7 @@ function SearchBook() {
             setIsLoading(false);
         }
     }
+    
 
     return (
         <div>
