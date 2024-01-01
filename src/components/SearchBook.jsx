@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import ImageSearchResult from './ImageSearchResult'; // Assuming you have an ImageSearchResult component
+import SearchBookResult from './SeachBookResult';
 
 const SeachBook = ({ setBookImageUrl, setModalState }) => {
   const [bookSearchKeyword, setBookSearchKeyword] = useState("");
@@ -33,7 +33,7 @@ const SeachBook = ({ setBookImageUrl, setModalState }) => {
       />
       <button onClick={handleImageSearchClick}>검색</button>
       {bookSearchResult.map((item, index) => (
-        <ImageSearchResult
+        <SearchBookResult
           key={index}
           item={item}
           setBookImageUrl={setBookImageUrl}
