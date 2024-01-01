@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Modal from './Modal'; // Assuming you have a Modal component
 import ImageSearchResult from './ImageSearchResult'; // Assuming you have an ImageSearchResult component
 
 const SeachBook = ({ setBookImageUrl, setModalState }) => {
