@@ -40,7 +40,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://openapi.naver.com/v1/search/book.json?query=김겨울',
+      url: 'https://openapi.naver.com/v1/search/blog?query=김겨울',
       headers: {
         'X-Naver-Client-Id': 'HjTqhvvcGj1bjRCEuTNG',
         'X-Naver-Client-Secret': 'bIXKGW9Pgb',
