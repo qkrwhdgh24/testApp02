@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import SearchBookResult from './SeachBookResult';
+import SearchBookResult from './SearchBookResult';
 
 const SearchBook = ({ setBookImageUrl, setModalState }) => {
   const [bookSearchKeyword, setBookSearchKeyword] = useState("");
   const [bookSearchResult, setBookSearchResult] = useState([]);
+  const [postResponse, setPostResponse] = useState(null);
 
   const handleImageSearchInputChange = (e) => {
     setBookSearchKeyword(e.target.value);
@@ -16,42 +17,17 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
       return;
     }
     try {
-      // Define the apiUrl for your serverless function
+      // Define the API URL for your serverless function
       const apiUrl = 'https://test-appsite.netlify.app/'; // Update with your serverless function endpoint
 
-      // Make the API request to your serverless function
-      const { data } = await axios.get(`${apiUrl}?query=${encodeURIComponent(bookSearchKeyword)}`);
-      console.log(data);
-      // Handle data format
-      if (Array.isArray(data)) {
-        setBookSearchResult(data);
-      } else if (data.items && Array.isArray(data.items)) {
-        setBookSearchResult(data.items);
-      } else {
-        console.error("Invalid data format received from the server.");
-      }
+      // Make the POST request to the specified URL
+      const response = await axios.post(apiUrl, { query: bookSearchKeyword });
+
+      // Update the state with search results and POST response
+      setBookSearchResult(response.data);
+      setPostResponse(response.data); // Set the POST response in state
     } catch (err) {
       console.error(err); // Log the error for debugging
-    }
-  };
-
-  // Include your sample Axios POST request code here
-  const sendSamplePostRequest = async () => {
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://openapi.naver.com/v1/search/book?query=김겨울',
-      headers: {
-        'X-Naver-Client-Id': 'HjTqhvvcGj1bjRCEuTNG',
-        'X-Naver-Client-Secret': 'bIXKGW9Pgb',
-      },
-    };
-
-    try {
-      const response = await axios.request(config);
-      console.log(JSON.stringify(response.data));
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -64,21 +40,22 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
         onChange={handleImageSearchInputChange}
       />
       <button onClick={handleImageSearchClick}>검색</button>
-      {Array.isArray(bookSearchResult) && bookSearchResult.length > 0 ? (
-        bookSearchResult.map((item, index) => (
-          <SearchBookResult
-            key={index}
-            item={item}
-            setBookImageUrl={setBookImageUrl}
-            setModalState={setModalState}
-          />
-        ))
-      ) : (
-        <p>No search results found.</p>
-      )}
+      {bookSearchResult.map((item, index) => (
+        <SearchBookResult
+          key={index}
+          item={item}
+          setBookImageUrl={setBookImageUrl}
+          setModalState={setModalState}
+        />
+      ))}
       
-      {/* Include a button to trigger your sample POST request */}
-      <button onClick={sendSamplePostRequest}>Send Sample POST Request</button>
+      {/* Display the POST response, if any */}
+      {postResponse && (
+        <div>
+          <h3>POST Response</h3>
+          <pre>{JSON.stringify(postResponse, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 };

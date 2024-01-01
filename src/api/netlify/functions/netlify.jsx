@@ -1,29 +1,31 @@
+const express = require('express');
 const axios = require('axios');
 
-exports.handler = async function(event, context) {
-    const query = event.queryStringParameters.query;
-    const apiUrl = `https://openapi.naver.com/v1/search/book?query=${encodeURIComponent(query)}`;
+const app = express();
+const port = 'https://test-appsite.netlify.app/';
 
-    // Set up the headers with your Naver API credentials
+const client_id = 'HjTqhvvcGj1bjRCEuTNG';
+const client_secret = 'bIXKGW9Pgb';
+
+app.get('/search/book', async (req, res) => {
+  try {
+    const query = req.query.query;
+    const apiUrl = `https://openapi.naver.com/v1/search/book?query=${encodeURI(query)}`;
+
     const headers = {
-        'X-Naver-Client-Id': process.env.REACT_APP_NAVER_ID,
-        'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_SECRET,
+      'X-Naver-Client-Id': client_id,
+      'X-Naver-Client-Secret': client_secret,
     };
 
-    try {
-        const response = await axios.get(apiUrl, { headers });
-        return {
-            statusCode: 200,
-            body: JSON.stringify(response.data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-    } catch (error) {
-        // Handle errors (e.g., API request failed)
-        return {
-            statusCode: error.response ? error.response.status : 500,
-            body: JSON.stringify({ message: error.message }),
-        };
-    }
-};
+    const response = await axios.get(apiUrl, { headers });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://127.0.0.1:${port}`);
+});
