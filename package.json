@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "https://test-appsite.netlify.app",
+  "homepage": "https://peaceful-dusk-762c6c.netlify.app",
   "eslintConfig": {
     "extends": [
       "react-app",
