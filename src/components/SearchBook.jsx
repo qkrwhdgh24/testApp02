@@ -40,11 +40,11 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
                 headers: headers,
             });
 
-            // Update the state with search results and POST response
+           
             setBookSearchResult(response.data.items);
-            setPostResponse(response.data); // Set the POST response in state
+            setPostResponse(response.data); 
         } catch (err) {
-            console.error(err); // Log the error for debugging
+            console.error(err); 
         }
     };
 
