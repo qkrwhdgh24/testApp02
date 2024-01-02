@@ -14,6 +14,17 @@ function SearchBook() {
     const bookSearchKeyword = (e) => {
         setKeywords(e.target.value);
     };
+    const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+const URL = `${PROXY}/v1/search/book.json`;
+
+const instance = axios.create({
+      headers: {
+         'Content-Type': 'application/json',
+         Accept: 'application/json',
+         'X-Naver-Client-Id': process.env.REACT_APP_NAVER_ID,
+         'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_SECRET,
+      },
+   });
 
     const searchBookEvent = async () => {
         if (!keywords.trim()) {
@@ -23,8 +34,8 @@ function SearchBook() {
         setIsLoading(true);
         setError(null);
         try {
-            const apiUrl = `https://openapi.naver.com/v1/search/books?query=${encodeURIComponent(keywords)}`;
-            const res = await axios.get(apiUrl);
+            //const apiUrl = `https://openapi.naver.com/v1/search/books?query=${encodeURIComponent(keywords)}`;
+            const res = await instance.get(URL);
             if (res.headers['content-type']?.includes('application/json')) {
                 setBookResults(res.data.items); // Naver API의 응답 구조에 맞게 수정
             } else {
