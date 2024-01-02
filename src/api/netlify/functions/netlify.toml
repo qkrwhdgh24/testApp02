@@ -33,6 +33,7 @@
 //   console.log(`Server is running on port ${port}`);
 // });
 
+//nettlify.toml
 [[redirects]]
   from = "/proxy/*"
   to = "https://openapi.naver.com/:splat"

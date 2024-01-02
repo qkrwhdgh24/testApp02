@@ -1,9 +1,9 @@
-// 네이버 검색 API 예제 - 블로그 검색
+//server.jsx
 var express = require('express');
 var app = express();
 var client_id = process.env.REACT_APP_NAVER_ID;
 var client_secret = process.env.REACT_APP_NAVER_SECRET;
-app.get('/search/blog', function (req, res) {
+app.get('/search/book', function (req, res) {
    var api_url = 'https://openapi.naver.com/v1/search/book?query=' + encodeURI(req.query.query); // JSON 결과
 //   var api_url = 'https://openapi.naver.com/v1/search/blog.xml?query=' + encodeURI(req.query.query); // XML 결과
    var request = require('request');
