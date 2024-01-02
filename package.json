@@ -24,6 +24,7 @@
     "eject": "react-scripts eject"
   },
   "homepage": "https://peaceful-dusk-762c6c.netlify.app",
+  "proxy":"https://openapi.naver.com/",
   "eslintConfig": {
     "extends": [
       "react-app",
