@@ -24,7 +24,6 @@
     "eject": "react-scripts eject"
   },
   "homepage": "https://test-appsite.netlify.app",
-  "proxy": "https://openapi.naver.com",
   "eslintConfig": {
     "extends": [
       "react-app",
