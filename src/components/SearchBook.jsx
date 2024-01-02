@@ -10,9 +10,46 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     const [bookSearchResult, setBookSearchResult] = useState([]);
     const [postResponse, setPostResponse] = useState(null);
 
+    const handleImageSearchInputChange = (e) => {
+        setBookSearchKeyword(e.target.value);
+    };
+
+    const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+    const URL = `${PROXY}/v1/search/book.json`;
+
+    const instance = axios.create({
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'X-Naver-Client-Id': process.env.REACT_APP_NAVER_ID,
+            'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_SECRET,
+        },
+    });
+
+    const handleImageSearchClick = async () => {
+        if (!bookSearchKeyword.trim()) {
+            console.log("검색어 없음");
+            return;
+        }
+        try {
+
+
+            // Make the POST request to the Naver API
+            const response = await instance.get(URL, {
+                params: { query: bookSearchKeyword },
+                headers: headers,
+            });
+
+            // Update the state with search results and POST response
+            setBookSearchResult(response.data.items);
+            setPostResponse(response.data); // Set the POST response in state
+        } catch (err) {
+            console.error(err); // Log the error for debugging
+        }
+    };
 
     return (
-        <div title="이미지 검색하기" >
+        <div title="이미지 검색하기" setModalState={setModalState}>
             {/* ... Your modal content ... */}
             <input
                 placeholder="책 제목, 지은이, 키워드로 검색할 수 있습니다."
@@ -24,7 +61,8 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
                 <SearchBookResult
                     key={index}
                     item={item}
-                    
+                    setBookImageUrl={setBookImageUrl}
+                    setModalState={setModalState}
                 />
             ))}
 
