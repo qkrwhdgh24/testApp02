@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
 function SearchBook() {
     const [keywords, setKeywords] = useState('');
@@ -8,12 +8,12 @@ function SearchBook() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        console.log(bookResults); // Log the state when it updates
+        console.log(bookResults);
     }, [bookResults]);
 
     const bookSearchKeyword = (e) => {
         setKeywords(e.target.value);
-    }
+    };
 
     const searchBookEvent = async () => {
         if (!keywords.trim()) {
@@ -23,24 +23,21 @@ function SearchBook() {
         setIsLoading(true);
         setError(null);
         try {
-            const apiUrl = `/src/SeachBook?query=${encodeURIComponent(keywords)}`;
-            // const apiUrl = `/?query=${encodeURIComponent(keywords)}`;
+            const apiUrl = `https://openapi.naver.com/v1/search/books?query=${encodeURIComponent(keywords)}`;
             const res = await axios.get(apiUrl);
             if (res.headers['content-type']?.includes('application/json')) {
-                const { data } = res;
-                setBookResults(data);
+                setBookResults(res.data.items); // Naver API의 응답 구조에 맞게 수정
             } else {
                 console.error(res);    
                 setError('no data');
             }
-            
         } catch (error) {
             console.error(error);
             setError('no data');
         } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     return (
         <div>
@@ -52,12 +49,12 @@ function SearchBook() {
             {isLoading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {Array.isArray(bookResults) && bookResults.map((book, index) => (
-            <div key={index}>
-                <p>{book.title}</p>
-            </div>
-        ))}
+                <div key={index}>
+                    <p>{book.title}</p>
+                </div>
+            ))}
         </div>
-    )
+    );
 }
 
 export default SearchBook;
