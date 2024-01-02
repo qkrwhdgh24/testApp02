@@ -1,40 +1,63 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import ErrorPage from './pages/ErrorPage';
-import MyBook from './pages/MyBook';
-import Phrase from './pages/Phrase';
-import LogIn from './pages/LogIn';
-import SignUp from './pages/SignUp';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+function SearchBook() {
+    const [keywords, setKeywords] = useState('');
+    const [bookResults, setBookResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-//const routes = createBrowserRouter([
-const routes = createBrowserRouter([
-  {
-    path : '/', 
-    element : <App/>,
-    errorElement : <ErrorPage />,
+    useEffect(() => {
+        console.log(bookResults); // Log the state when it updates
+    }, [bookResults]);
 
-    children : [
-      {path : '/login', element : <LogIn/>},
-      {path : '/signup', element : <SignUp/>},
-      {path : '/mybook' , element : <MyBook/>},
-      {path : '/phrase', element : <Phrase/>},
-    ]
-  }
-])
+    const bookSearchKeyword = (e) => {
+        setKeywords(e.target.value);
+    }
 
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={routes}/>
-  </React.StrictMode>
-);
+    const searchBookEvent = async () => {
+        if (!keywords.trim()) {
+            console.log('검색어 없음');
+            return;
+        }
+        setIsLoading(true);
+        setError(null);
+        try {
+            const apiUrl = `/src/SeachBook?query=${encodeURIComponent(keywords)}`;
+            // const apiUrl = `/?query=${encodeURIComponent(keywords)}`;
+            const res = await axios.get(apiUrl);
+            if (res.headers['content-type']?.includes('application/json')) {
+                const { data } = res;
+                setBookResults(data);
+            } else {
+                console.error(res);    
+                setError('no data');
+            }
+            
+        } catch (error) {
+            console.error(error);
+            setError('no data');
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    return (
+        <div>
+            <input 
+                value={keywords}
+                onChange={bookSearchKeyword}
+            />
+            <button onClick={searchBookEvent}>검색</button>
+            {isLoading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            {Array.isArray(bookResults) && bookResults.map((book, index) => (
+            <div key={index}>
+                <p>{book.title}</p>
+            </div>
+        ))}
+        </div>
+    )
+}
+
+export default SearchBook;
