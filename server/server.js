@@ -22,5 +22,5 @@ app.get('/search/blog', function (req, res) {
    });
  });
  app.listen(3000, function () {
-   console.log('http://127.0.0.1:3000/search/blog?query=검색어 app listening on port 3000!');
+   console.log('https://test-appsite.netlify.app/search/book?query=검색어 app listening on port 3000!');
  });
