@@ -21,8 +21,8 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
-            'X-Naver-Client-Id': process.env.REACT_APP_NAVER_ID,
-            'X-Naver-Client-Secret': process.env.REACT_APP_NAVER_SECRET,
+            'X-Naver-Client-Id': 'HjTqhvvcGj1bjRCEuTNG',
+            'X-Naver-Client-Secret': 'bIXKGW9Pgb'
         },
     });
 
