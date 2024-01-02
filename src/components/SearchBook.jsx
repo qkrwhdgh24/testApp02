@@ -37,7 +37,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
             // Make the POST request to the Naver API
             const response = await instance.get(URL, {
                 params: { query: bookSearchKeyword },
-                headers: headers,
+                
             });
 
             // Update the state with search results and POST response
@@ -49,7 +49,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
     };
 
     return (
-        <div title="이미지 검색하기" setModalState={setModalState}>
+        <div title="이미지 검색하기">
             {/* ... Your modal content ... */}
             <input
                 placeholder="책 제목, 지은이, 키워드로 검색할 수 있습니다."
@@ -62,7 +62,7 @@ const SearchBook = ({ setBookImageUrl, setModalState }) => {
                     key={index}
                     item={item}
                     setBookImageUrl={setBookImageUrl}
-                    setModalState={setModalState}
+                  
                 />
             ))}
 
