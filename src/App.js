@@ -10,10 +10,10 @@ function App() {
     <>
       <GlobalStyle/>
       <Nav/>
-      
-      <Routes>
+      <SearchBook/>
+      {/* <Routes>
         <Route path='/' element = {<SearchBook/>}/>
-      </Routes>
+      </Routes> */}
 
       <Outlet/>
     </>
